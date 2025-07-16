@@ -390,7 +390,7 @@ const Exam = ({ onExamComplete }) => {
 
   const startExam = async () => {
     try {
-      const response = await axios.post(`${API}/exam/start?num_questions=10`);
+      const response = await axios.post(`${API}/exam/start?num_questions=5`);
       setExamData(response.data);
       setTimeLeft(response.data.time_limit * 60); // Convert to seconds
       setLoading(false);
