@@ -461,13 +461,17 @@ async def submit_exam(session_id: str, current_user: User = Depends(get_current_
 
 @api_router.get("/exam/history")
 async def get_exam_history(current_user: User = Depends(get_current_user)):
-    sessions = await db.exam_sessions.find(
-        {"user_id": current_user.id, "status": ExamStatus.COMPLETED}
-    ).sort("completed_at", -1).to_list(50)
-    
-    # Serialize documents to handle ObjectId
-    serialized_sessions = serialize_doc(sessions)
-    return serialized_sessions
+    try:
+        sessions = await db.exam_sessions.find(
+            {"user_id": current_user.id, "status": ExamStatus.COMPLETED}
+        ).sort("completed_at", -1).to_list(50)
+        
+        # Serialize documents to handle ObjectId
+        serialized_sessions = serialize_doc(sessions)
+        return serialized_sessions
+    except Exception as e:
+        logger.error(f"Error in exam history: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 # User profile endpoints
 @api_router.get("/profile")
