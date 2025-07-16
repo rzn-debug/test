@@ -210,11 +210,8 @@ class BackendTester:
         answer_results = []
         for i, question in enumerate(questions[:2]):  # Answer first 2 questions
             answer_result = self.test_endpoint(
-                f"Submit Answer {i+1}", "POST", f"/exam/{session_id}/answer",
-                data={
-                    "question_id": question["id"],
-                    "selected_option": 0  # Always select first option for testing
-                },
+                f"Submit Answer {i+1}", "POST", 
+                f"/exam/{session_id}/answer?question_id={question['id']}&selected_option=0",
                 headers=headers
             )
             answer_results.append(answer_result["success"])
