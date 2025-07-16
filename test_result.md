@@ -107,87 +107,108 @@ user_problem_statement: "Build a comprehensive e-exam preparation system with us
 backend:
   - task: "User Authentication System"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implemented JWT-based user authentication with registration and login endpoints. Includes password hashing and token generation."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: User registration, login, JWT token validation, and /auth/me endpoint all working correctly. Authentication middleware properly validates tokens and handles invalid credentials."
 
   - task: "Question Management System"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implemented question CRUD operations with support for categories, difficulty levels, images, and videos. Includes random question selection."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Question creation, retrieval with filters (category/difficulty), and random question selection all working correctly. API properly handles authentication and returns expected data formats."
 
   - task: "Exam Session Management"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/backend/server.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implemented exam session creation, answer submission, and automatic scoring. Supports time limits and detailed result analysis."
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE: Exam start and answer submission work correctly, but /exam/history endpoint fails with 500 error due to MongoDB ObjectId serialization issues. This prevents users from viewing their exam history."
 
   - task: "Badge System"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implemented badge system with automatic badge awards based on user achievements (first exam, 10 exams, high scorer)."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: Badge system logic is integrated into exam completion flow and executes without errors. Badge award logic is functional."
 
   - task: "User Profile API"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/backend/server.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implemented user profile endpoint with exam history, average score calculation, and settings management."
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE: /profile/settings endpoint works correctly, but /profile endpoint fails with 500 error due to MongoDB ObjectId serialization issues when returning user data with exam history."
 
   - task: "Leaderboard System"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/backend/server.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implemented leaderboard with top users based on average scores and total exams completed."
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE: /leaderboard endpoint fails with 500 error due to MongoDB ObjectId serialization issues when aggregating and returning user data."
 
   - task: "Sample Data Initialization"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "low"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implemented admin initialization endpoint to populate database with sample questions across different categories and difficulty levels."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: /admin/init endpoint successfully creates sample questions in database. Handles duplicate initialization gracefully."
 
 frontend:
   - task: "Authentication UI"
