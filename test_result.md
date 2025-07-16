@@ -291,16 +291,18 @@ metadata:
 
 test_plan:
   current_focus:
-    - "User Authentication System"
-    - "Question Management System"
     - "Exam Session Management"
-    - "Authentication UI"
-    - "Dashboard Interface"
-    - "Exam Taking Interface"
-  stuck_tasks: []
-  test_all: true
-  test_priority: "high_first"
+    - "User Profile API" 
+    - "Leaderboard System"
+  stuck_tasks:
+    - "Exam Session Management"
+    - "User Profile API"
+    - "Leaderboard System"
+  test_all: false
+  test_priority: "stuck_first"
 
 agent_communication:
   - agent: "main"
     message: "Initial implementation of e-exam preparation system completed. Core features include user authentication, exam taking, scoring, badge system, and responsive UI. All backend endpoints are implemented with proper JWT authentication. Frontend includes complete exam workflow with theme support. Ready for comprehensive testing."
+  - agent: "testing"
+    message: "BACKEND TESTING COMPLETED: 4/7 tasks working correctly. CRITICAL ISSUE IDENTIFIED: MongoDB ObjectId serialization errors affecting /exam/history, /profile, and /leaderboard endpoints. These endpoints return 500 errors due to ObjectId objects not being JSON serializable. Authentication, question management, and basic exam functionality work correctly. Badge system logic executes properly. Main agent needs to fix ObjectId serialization in endpoints that return user data or exam history."
