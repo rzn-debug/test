@@ -170,7 +170,7 @@ backend:
 
   - task: "User Profile API"
     implemented: true
-    working: false
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 1
     priority: "medium"
@@ -182,6 +182,9 @@ backend:
       - working: false
         agent: "testing"
         comment: "❌ CRITICAL ISSUE: /profile/settings endpoint works correctly, but /profile endpoint fails with 500 error due to MongoDB ObjectId serialization issues when returning user data with exam history."
+      - working: true
+        agent: "testing"
+        comment: "✅ FIXED: ObjectId serialization issue resolved. /profile endpoint now properly serializes user data and recent exam sessions using serialize_doc function. Returns user profile with exam statistics, recent sessions, and average score calculation. Settings update functionality also working correctly."
 
   - task: "Leaderboard System"
     implemented: true
