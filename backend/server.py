@@ -476,25 +476,29 @@ async def get_exam_history(current_user: User = Depends(get_current_user)):
 # User profile endpoints
 @api_router.get("/profile")
 async def get_profile(current_user: User = Depends(get_current_user)):
-    # Get recent exam sessions
-    recent_sessions = await db.exam_sessions.find(
-        {"user_id": current_user.id, "status": ExamStatus.COMPLETED}
-    ).sort("completed_at", -1).limit(5).to_list(5)
-    
-    # Serialize sessions to handle ObjectId
-    serialized_sessions = serialize_doc(recent_sessions)
-    
-    # Calculate average score
-    avg_score = 0
-    if current_user.total_exams > 0:
-        avg_score = current_user.total_score / current_user.total_exams
-    
-    return {
-        "user": serialize_doc(current_user.dict()),
-        "recent_sessions": serialized_sessions,
-        "average_score": avg_score,
-        "total_exams": current_user.total_exams
-    }
+    try:
+        # Get recent exam sessions
+        recent_sessions = await db.exam_sessions.find(
+            {"user_id": current_user.id, "status": ExamStatus.COMPLETED}
+        ).sort("completed_at", -1).limit(5).to_list(5)
+        
+        # Serialize sessions to handle ObjectId
+        serialized_sessions = serialize_doc(recent_sessions)
+        
+        # Calculate average score
+        avg_score = 0
+        if current_user.total_exams > 0:
+            avg_score = current_user.total_score / current_user.total_exams
+        
+        return {
+            "user": serialize_doc(current_user.dict()),
+            "recent_sessions": serialized_sessions,
+            "average_score": avg_score,
+            "total_exams": current_user.total_exams
+        }
+    except Exception as e:
+        logger.error(f"Error in profile: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 @api_router.put("/profile/settings")
 async def update_settings(
