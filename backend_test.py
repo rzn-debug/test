@@ -54,6 +54,8 @@ class BackendTester:
                 
             if not result["success"]:
                 result["error"] = f"Expected {expected_status}, got {response.status_code}"
+                if response.status_code >= 400:
+                    self.log(f"Error details: {result['data']}")
                 
             self.log(f"{name}: {'✅ PASS' if result['success'] else '❌ FAIL'} ({response.status_code})")
             return result
