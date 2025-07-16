@@ -528,7 +528,10 @@ async def get_leaderboard(current_user: User = Depends(get_current_user)):
     ]
     
     leaderboard = await db.users.aggregate(pipeline).to_list(10)
-    return leaderboard
+    
+    # Serialize documents to handle ObjectId
+    serialized_leaderboard = serialize_doc(leaderboard)
+    return serialized_leaderboard
 
 # Initialize default questions
 @api_router.post("/admin/init")
