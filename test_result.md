@@ -300,15 +300,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Exam Session Management"
-    - "User Profile API" 
-    - "Leaderboard System"
-  stuck_tasks:
-    - "Exam Session Management"
-    - "User Profile API"
-    - "Leaderboard System"
+    - "Authentication UI"
+    - "Dashboard Interface" 
+    - "Exam Taking Interface"
+  stuck_tasks: []
   test_all: false
-  test_priority: "stuck_first"
+  test_priority: "high_first"
 
 agent_communication:
   - agent: "main"
