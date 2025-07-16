@@ -522,24 +522,28 @@ async def update_settings(
 # Leaderboard endpoint
 @api_router.get("/leaderboard")
 async def get_leaderboard(current_user: User = Depends(get_current_user)):
-    pipeline = [
-        {"$match": {"total_exams": {"$gt": 0}}},
-        {"$addFields": {"average_score": {"$divide": ["$total_score", "$total_exams"]}}},
-        {"$sort": {"average_score": -1}},
-        {"$limit": 10},
-        {"$project": {
-            "username": 1,
-            "total_exams": 1,
-            "average_score": 1,
-            "badges": 1
-        }}
-    ]
-    
-    leaderboard = await db.users.aggregate(pipeline).to_list(10)
-    
-    # Serialize documents to handle ObjectId
-    serialized_leaderboard = serialize_doc(leaderboard)
-    return serialized_leaderboard
+    try:
+        pipeline = [
+            {"$match": {"total_exams": {"$gt": 0}}},
+            {"$addFields": {"average_score": {"$divide": ["$total_score", "$total_exams"]}}},
+            {"$sort": {"average_score": -1}},
+            {"$limit": 10},
+            {"$project": {
+                "username": 1,
+                "total_exams": 1,
+                "average_score": 1,
+                "badges": 1
+            }}
+        ]
+        
+        leaderboard = await db.users.aggregate(pipeline).to_list(10)
+        
+        # Serialize documents to handle ObjectId
+        serialized_leaderboard = serialize_doc(leaderboard)
+        return serialized_leaderboard
+    except Exception as e:
+        logger.error(f"Error in leaderboard: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 # Initialize default questions
 @api_router.post("/admin/init")
