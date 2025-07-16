@@ -265,7 +265,7 @@ async def login(user_data: UserLogin):
         expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     )
     
-    return {"access_token": access_token, "token_type": "bearer", "user": user}
+    return {"access_token": access_token, "token_type": "bearer", "user": serialize_doc(user)}
 
 @api_router.get("/auth/me")
 async def get_current_user_profile(current_user: User = Depends(get_current_user)):
