@@ -137,7 +137,7 @@ backend:
 
   - task: "Exam Session Management"
     implemented: true
-    working: false
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 1
     priority: "high"
@@ -149,6 +149,9 @@ backend:
       - working: false
         agent: "testing"
         comment: "❌ CRITICAL ISSUE: Exam start and answer submission work correctly, but /exam/history endpoint fails with 500 error due to MongoDB ObjectId serialization issues. This prevents users from viewing their exam history."
+      - working: true
+        agent: "testing"
+        comment: "✅ FIXED: ObjectId serialization issue resolved. Added serialize_doc function that properly converts ObjectId to string. /exam/history endpoint now returns properly serialized exam session data. Full exam workflow tested successfully including exam start, answer submission, scoring, and history retrieval."
 
   - task: "Badge System"
     implemented: true
