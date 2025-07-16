@@ -136,6 +136,31 @@ def hash_password(password: str) -> str:
 def verify_password(password: str, hashed: str) -> bool:
     return hash_password(password) == hashed
 
+def serialize_doc(doc):
+    """Convert MongoDB document to JSON serializable format"""
+    if doc is None:
+        return None
+    
+    if isinstance(doc, list):
+        return [serialize_doc(item) for item in doc]
+    
+    if isinstance(doc, dict):
+        serialized = {}
+        for key, value in doc.items():
+            if isinstance(value, ObjectId):
+                serialized[key] = str(value)
+            elif isinstance(value, datetime):
+                serialized[key] = value.isoformat()
+            elif isinstance(value, dict):
+                serialized[key] = serialize_doc(value)
+            elif isinstance(value, list):
+                serialized[key] = serialize_doc(value)
+            else:
+                serialized[key] = value
+        return serialized
+    
+    return doc
+
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     if expires_delta:
