@@ -336,7 +336,7 @@ const Dashboard = ({ onStartExam }) => {
       </div>
 
       <div className="dashboard-actions">
-        <button className="action-button primary">
+        <button className="action-button primary" onClick={onStartExam}>
           🎯 Yeni Sınav Başlat
         </button>
         <button className="action-button secondary">
