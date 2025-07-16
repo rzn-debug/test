@@ -76,9 +76,11 @@ class BackendTester:
         self.log("\n=== Testing User Authentication System ===")
         
         # Test user registration
+        import random
+        user_suffix = random.randint(1000, 9999)
         register_data = {
-            "username": "examtester2024",
-            "email": "examtester2024@example.com", 
+            "username": f"examtester{user_suffix}",
+            "email": f"examtester{user_suffix}@example.com", 
             "password": "SecurePass123!"
         }
         
