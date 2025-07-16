@@ -465,7 +465,9 @@ async def get_exam_history(current_user: User = Depends(get_current_user)):
         {"user_id": current_user.id, "status": ExamStatus.COMPLETED}
     ).sort("completed_at", -1).to_list(50)
     
-    return sessions
+    # Serialize documents to handle ObjectId
+    serialized_sessions = serialize_doc(sessions)
+    return serialized_sessions
 
 # User profile endpoints
 @api_router.get("/profile")
