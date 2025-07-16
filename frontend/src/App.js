@@ -291,7 +291,7 @@ const Header = () => {
 };
 
 // Dashboard Component
-const Dashboard = () => {
+const Dashboard = ({ onStartExam }) => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
