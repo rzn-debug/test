@@ -188,7 +188,7 @@ backend:
 
   - task: "Leaderboard System"
     implemented: true
-    working: false
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 1
     priority: "medium"
@@ -200,6 +200,9 @@ backend:
       - working: false
         agent: "testing"
         comment: "❌ CRITICAL ISSUE: /leaderboard endpoint fails with 500 error due to MongoDB ObjectId serialization issues when aggregating and returning user data."
+      - working: true
+        agent: "testing"
+        comment: "✅ FIXED: ObjectId serialization issue resolved. /leaderboard endpoint now properly serializes user data using serialize_doc function. Returns top 10 users ranked by average score with proper JSON serialization of all MongoDB ObjectId fields."
 
   - task: "Sample Data Initialization"
     implemented: true
